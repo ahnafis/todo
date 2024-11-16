@@ -1,0 +1,9 @@
+{
+  "name": "todo",
+  "version": "0.0.1",
+  "type": "module",
+  "private": "true",
+  "engines": {
+    "node": ">=23.1.0"
+  }
+}
