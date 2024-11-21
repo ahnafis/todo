@@ -1,2 +1,4 @@
-export type UniqueId = number;
-export type TimeStamp = number;
+import type { Entity, NonEntity, TimeStamp, UniqueId } from "./entity";
+import type { DeepNullable, Nullable } from "./nullable";
+
+export type { DeepNullable, Entity, Nullable, NonEntity, TimeStamp, UniqueId };
