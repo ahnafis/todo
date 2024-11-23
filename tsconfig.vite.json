@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.common.json",
+  "include": ["vite.config.ts", "tests/"],
+
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2023", "dom"]
+  }
+}
