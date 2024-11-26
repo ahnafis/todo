@@ -1,24 +1,25 @@
 import type { UniqueId } from "@/types";
 import type { Task } from "../../domain/entities";
+
 import { ITaskRepository } from "../../domain/repositories";
-import { ITaskDataProvider } from "../providers";
+import { ITaskDataSource } from "../sources";
 
 export default class TaskRepository implements ITaskRepository {
-  constructor(private provider: ITaskDataProvider) {}
+  constructor(private data_source: ITaskDataSource) {}
 
   addTask(data: Task): void {
-    this.provider.create(data);
+    this.data_source.insert(data);
   }
 
   getTasks(filters?: Partial<Task>): Task[] {
-    return this.provider.read(filters);
+    return this.data_source.read(filters);
   }
 
   updateTask(new_data: Task): void {
-    this.provider.update(new_data);
+    this.data_source.update(new_data);
   }
 
   deleteTask(id: UniqueId): void {
-    this.provider.delete(id);
+    this.data_source.delete(id);
   }
 }

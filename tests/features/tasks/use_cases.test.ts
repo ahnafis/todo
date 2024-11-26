@@ -2,10 +2,10 @@ import { describe, expect, test } from "vitest";
 
 import type { Task } from "@/features/tasks/domain/entities";
 import { TaskStatus } from "@/features/tasks/domain/subtypes";
-import { TaskDataModel } from "@/features/tasks/data/models";
+import { TaskModel } from "@/features/tasks/data/models";
 
 import { TaskRepository } from "@/features/tasks/data/repositories";
-import { MockTaskDataProvider } from "./MockTaskDataProvider";
+import { MockTaskDataSource } from "./MockTaskDataProvider";
 
 import {
   AddTask,
@@ -14,7 +14,7 @@ import {
   UpdateTask,
 } from "@/features/tasks/domain/use_cases";
 
-const task_data_provider = new MockTaskDataProvider();
+const task_data_provider = new MockTaskDataSource();
 const task_repository = new TaskRepository(task_data_provider);
 
 const add_task = new AddTask(task_repository);
@@ -25,14 +25,14 @@ const delete_task = new DeleteTask(task_repository);
 const time1 = new Date(2024, 3, 12).getTime();
 const time2 = new Date(2024, 3, 22).getTime();
 
-const task1: Task = new TaskDataModel({
+const task1: Task = new TaskModel({
   title: "Test the Task entity",
   description: "Nothing really here.",
   due_date: time1,
   categories: ["easy", "favorite"],
 }).data;
 
-const task2: Task = new TaskDataModel({
+const task2: Task = new TaskModel({
   title: "Test use cases",
   description: "Hi! Nothing's here",
   due_date: time2,

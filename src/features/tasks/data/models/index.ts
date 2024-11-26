@@ -1,3 +1,3 @@
-import TaskDataModel from "./TaskDataModel";
+import TaskModel from "./TaskModel";
 
-export { TaskDataModel };
+export { TaskModel };

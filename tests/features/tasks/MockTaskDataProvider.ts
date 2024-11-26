@@ -1,15 +1,16 @@
-import { ITaskDataProvider } from "@/features/tasks/data/providers";
 import type { Task } from "@/features/tasks/domain/entities";
 import type { UniqueId } from "@/types";
 
-export class MockTaskDataProvider implements ITaskDataProvider {
+import { ITaskDataSource } from "@/features/tasks/data/sources";
+
+export class MockTaskDataSource implements ITaskDataSource {
   private db: Task[];
 
   constructor() {
     this.db = [];
   }
 
-  create(data: Task): void {
+  insert(data: Task): void {
     this.db.push(data);
   }
 

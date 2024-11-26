@@ -3,7 +3,7 @@ import { createUid } from "@/utils";
 import type { Task } from "../../domain/entities";
 import { TaskStatus } from "../../domain/subtypes";
 
-export default class TaskDataModel {
+export default class TaskModel {
   readonly data: Task;
 
   constructor(data: Partial<Task>) {
