@@ -5,7 +5,7 @@ import { TaskStatus } from "@/features/tasks/domain/subtypes";
 import { TaskModel } from "@/features/tasks/data/models";
 
 import { TaskRepository } from "@/features/tasks/data/repositories";
-import { MockTaskDataSource } from "./MockTaskDataProvider";
+import { TaskLocalDataSource } from "@/features/tasks/data/sources";
 
 import {
   AddTask,
@@ -14,7 +14,8 @@ import {
   UpdateTask,
 } from "@/features/tasks/domain/use_cases";
 
-const task_data_provider = new MockTaskDataSource();
+const TEST_TASK_TABLE = "test_tasks";
+const task_data_provider = new TaskLocalDataSource(TEST_TASK_TABLE);
 const task_repository = new TaskRepository(task_data_provider);
 
 const add_task = new AddTask(task_repository);
