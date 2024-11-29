@@ -5,8 +5,5 @@ import type { ITaskRepository } from "../repositories";
 
 export default class GetTasks implements Command<Partial<Task>, Task[]> {
   constructor(private repository: ITaskRepository) {}
-
-  execute(filters?: Partial<Task>): Task[] {
-    return this.repository.getTasks(filters);
-  }
+  public execute = this.repository.getTasks;
 }

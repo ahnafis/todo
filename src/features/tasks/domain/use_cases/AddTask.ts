@@ -5,8 +5,5 @@ import type { ITaskRepository } from "../repositories";
 
 export default class AddTask implements Command<Task, void> {
   constructor(private repository: ITaskRepository) {}
-
-  execute(data: Task): void {
-    this.repository.addTask(data);
-  }
+  public execute = this.repository.addTask;
 }

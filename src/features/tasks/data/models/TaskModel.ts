@@ -15,7 +15,7 @@ export default class TaskModel {
       title: data.title || "",
       description: data.description || "",
 
-      // TODO : data. Use datetime
+      // TODO : Use datetime
       creation_date: data.creation_date || 0,
       due_date: data.due_date || 0,
 
