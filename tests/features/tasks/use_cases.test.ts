@@ -15,13 +15,13 @@ import {
 } from "@/features/tasks/domain/use_cases";
 
 const TEST_TASK_TABLE = "test_tasks";
-const task_data_provider = new TaskLocalDataSource(TEST_TASK_TABLE);
-const task_repository = new TaskRepository(task_data_provider);
+const task_data_source = new TaskLocalDataSource(TEST_TASK_TABLE);
+const task_repository = new TaskRepository(task_data_source);
 
-const add_task = new AddTask(task_repository);
-const get_tasks = new GetTasks(task_repository);
-const update_task = new UpdateTask(task_repository);
-const delete_task = new DeleteTask(task_repository);
+const addTask = new AddTask(task_repository).execute;
+const getTasks = new GetTasks(task_repository).execute;
+const updateTask = new UpdateTask(task_repository).execute;
+const deleteTask = new DeleteTask(task_repository).execute;
 
 const time1 = new Date(2024, 3, 12).getTime();
 const time2 = new Date(2024, 3, 22).getTime();
@@ -42,32 +42,42 @@ const task2: Task = new TaskModel({
 
 describe("Use case tests", () => {
   test("Should add task to the database", async () => {
-    add_task.execute(task1);
-    add_task.execute(task2);
-    expect(await get_tasks.execute()).toStrictEqual([task1, task2]);
+    await addTask(task1);
+    await addTask(task2);
+    expect(await getTasks()).toStrictEqual([task1, task2]);
+  });
+
+  test("Should avoid adding same task again", async () => {
+    await addTask(task2);
+    expect(await getTasks()).toStrictEqual([task1, task2]);
   });
 
   test("Should fetch tasks from the database", async () => {
-    expect(await get_tasks.execute()).toStrictEqual([task1, task2]);
+    expect(await getTasks()).toStrictEqual([task1, task2]);
   });
 
   test("Should fetch specified task from the database", async () => {
-    expect(await get_tasks.execute({ title: "Test use cases" })).toStrictEqual([
-      task2,
-    ]);
+    expect(await getTasks({ title: task2.title })).toStrictEqual([task2]);
   });
 
   test("Should update data into the database", async () => {
+    const task1_backup = Object.freeze({ ...task1 });
     task1.status = TaskStatus.DONE;
     task1.priority = 100;
 
-    update_task.execute(task1);
-    expect(await get_tasks.execute()).toStrictEqual([task1, task2]);
+    await updateTask(task1);
+    expect(await getTasks()).toStrictEqual([task1, task2]);
+    expect(await getTasks()).not.toStrictEqual([task1_backup, task2]);
+  });
+
+  test("Should avoid updating non-existing data into the database", async () => {
+    await updateTask(new TaskModel({}).data);
+    expect(await getTasks()).toStrictEqual([task1, task2]);
   });
 
   test("Should delete all data from the database", async () => {
-    delete_task.execute(task1.id);
-    delete_task.execute(task2.id);
-    expect(await get_tasks.execute()).toStrictEqual([]);
+    await deleteTask(task1.id);
+    await deleteTask(task2.id);
+    expect(await getTasks()).toStrictEqual([]);
   });
 });
