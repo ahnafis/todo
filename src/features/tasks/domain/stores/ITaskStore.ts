@@ -2,8 +2,8 @@ import type { UniqueId } from "@/types";
 import type { Task } from "../entities";
 
 export default interface ITaskStore {
-  add(data: Task): Promise<void>;
+  add(task: Task): Promise<void>;
   get(filters?: Partial<Task>): Promise<Task[]>;
-  update(new_data: Task): Promise<void>;
+  update(new_task: Task): Promise<void>;
   delete(id: UniqueId): Promise<void>;
 }

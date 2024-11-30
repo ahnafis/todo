@@ -10,16 +10,16 @@ export default class TaskLocalDataProvider implements ITaskDataProvider {
     this.db = new LocalStorageClient<Task>(collection);
   }
 
-  public insert = async (data: Task): Promise<void> => {
-    await this.db.insert(data);
+  public insert = async (task: Task): Promise<void> => {
+    await this.db.insert(task);
   };
 
   public read = async (filters?: Partial<Task>): Promise<Task[]> => {
     return await this.db.read(filters);
   };
 
-  public update = async (new_data: Task): Promise<void> => {
-    await this.db.update(new_data);
+  public update = async (new_task: Task): Promise<void> => {
+    await this.db.update(new_task);
   };
 
   public delete = async (id: UniqueId): Promise<void> => {
