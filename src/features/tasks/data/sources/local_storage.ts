@@ -6,15 +6,18 @@ export default class TaskLocalDataSource implements ITaskDataSource {
   private db: Task[];
 
   constructor(private collection: string) {
-    this.collection = collection;
-
     const raw_data: string = localStorage.getItem(this.collection) || "[]";
     this.db = JSON.parse(raw_data) || [];
   }
 
   public insert = async (data: Task): Promise<void> => {
+    if (await this.exists(data.id)) {
+      // TODO: Throw and handle an error instead.
+      return console.log("Cannot add same item agian.");
+    }
+
     this.db.push(data);
-    this.save();
+    await this.save();
   };
 
   public read = async (filters?: Partial<Task>): Promise<Task[]> => {
@@ -22,28 +25,34 @@ export default class TaskLocalDataSource implements ITaskDataSource {
 
     return this.db.filter((task) => {
       let key: keyof Partial<Task>;
+
+      // Return if filters matches with any data in the database.
       for (key in filters) return task[key] === filters[key];
     });
   };
 
   public update = async (new_data: Task): Promise<void> => {
     const index = this.db.indexOf(new_data);
+    const exists = index > -1;
 
-    if (index > 0) {
-      this.db[index] = new_data;
-    }
+    // TODO: Throw and handle an error instead.
+    if (!exists) return console.log("Not matches found. Nothing to update.");
 
-    this.save();
+    this.db[index] = new_data;
+    await this.save();
   };
 
   public delete = async (id: UniqueId): Promise<void> => {
-    this.db.forEach((task, index) => {
-      if (task.id == id) {
-        this.db.splice(index, 1);
-      }
-    });
+    const matches = await this.read({ id });
+    const index = this.db.indexOf(matches[0]);
 
-    this.save();
+    this.db.splice(index, 1);
+    await this.save();
+  };
+
+  private exists = async (id: UniqueId): Promise<boolean> => {
+    const matches = await this.read({ id });
+    return matches.length > 0;
   };
 
   private save = async (): Promise<void> => {
