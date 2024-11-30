@@ -41,33 +41,33 @@ const task2: Task = new TaskModel({
 }).data;
 
 describe("Use case tests", () => {
-  test("Should add task to the database", () => {
+  test("Should add task to the database", async () => {
     add_task.execute(task1);
     add_task.execute(task2);
-    expect(get_tasks.execute()).toStrictEqual([task1, task2]);
+    expect(await get_tasks.execute()).toStrictEqual([task1, task2]);
   });
 
-  test("Should fetch tasks from the database", () => {
-    expect(get_tasks.execute()).toStrictEqual([task1, task2]);
+  test("Should fetch tasks from the database", async () => {
+    expect(await get_tasks.execute()).toStrictEqual([task1, task2]);
   });
 
-  test("Should fetch specified task from the database", () => {
-    expect(get_tasks.execute({ title: "Test use cases" })).toStrictEqual([
+  test("Should fetch specified task from the database", async () => {
+    expect(await get_tasks.execute({ title: "Test use cases" })).toStrictEqual([
       task2,
     ]);
   });
 
-  test("Should update data into the database", () => {
+  test("Should update data into the database", async () => {
     task1.status = TaskStatus.DONE;
     task1.priority = 100;
 
     update_task.execute(task1);
-    expect(get_tasks.execute()).toStrictEqual([task1, task2]);
+    expect(await get_tasks.execute()).toStrictEqual([task1, task2]);
   });
 
-  test("Should delete all data from the database", () => {
+  test("Should delete all data from the database", async () => {
     delete_task.execute(task1.id);
     delete_task.execute(task2.id);
-    expect(get_tasks.execute()).toStrictEqual([]);
+    expect(await get_tasks.execute()).toStrictEqual([]);
   });
 });

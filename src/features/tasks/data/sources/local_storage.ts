@@ -12,12 +12,12 @@ export default class TaskLocalDataSource implements ITaskDataSource {
     this.db = JSON.parse(raw_data) || [];
   }
 
-  public insert = (data: Task): void => {
+  public insert = async (data: Task): Promise<void> => {
     this.db.push(data);
     this.save();
   };
 
-  public read = (filters?: Partial<Task>): Task[] => {
+  public read = async (filters?: Partial<Task>): Promise<Task[]> => {
     if (!filters) return this.db;
 
     return this.db.filter((task) => {
@@ -26,7 +26,7 @@ export default class TaskLocalDataSource implements ITaskDataSource {
     });
   };
 
-  public update = (new_data: Task): void => {
+  public update = async (new_data: Task): Promise<void> => {
     const index = this.db.indexOf(new_data);
 
     if (index > 0) {
@@ -36,7 +36,7 @@ export default class TaskLocalDataSource implements ITaskDataSource {
     this.save();
   };
 
-  public delete = (id: UniqueId): void => {
+  public delete = async (id: UniqueId): Promise<void> => {
     this.db.forEach((task, index) => {
       if (task.id == id) {
         this.db.splice(index, 1);
@@ -46,7 +46,7 @@ export default class TaskLocalDataSource implements ITaskDataSource {
     this.save();
   };
 
-  private save = (): void => {
+  private save = async (): Promise<void> => {
     localStorage.setItem(this.collection, JSON.stringify(this.db));
   };
 }
