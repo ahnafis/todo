@@ -7,5 +7,5 @@ export default class GetTasks
   implements Command<Partial<Task>, Promise<Task[]>>
 {
   constructor(private store: ITaskStore) {}
-  public execute = this.store.getTasks;
+  public execute = this.store.get;
 }
