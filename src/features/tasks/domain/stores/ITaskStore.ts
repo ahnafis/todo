@@ -1,7 +1,7 @@
 import type { UniqueId } from "@/types";
 import type { Task } from "../entities";
 
-export default interface ITaskRepository {
+export default interface ITaskStore {
   addTask(data: Task): Promise<void>;
   getTasks(filters?: Partial<Task>): Promise<Task[]>;
   updateTask(new_data: Task): Promise<void>;

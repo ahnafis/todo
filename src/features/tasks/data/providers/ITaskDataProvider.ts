@@ -1,7 +1,7 @@
 import type { UniqueId } from "@/types";
 import type { Task } from "../../domain/entities";
 
-export default interface ITaskDataSource {
+export default interface ITaskDataProvider {
   insert(data: Task): Promise<void>;
   read(filters?: Partial<Task>): Promise<Task[]>;
   update(new_data: Task): Promise<void>;

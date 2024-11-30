@@ -1,8 +1,8 @@
 import type { UniqueId } from "@/types";
 import type { Task } from "../../domain/entities";
-import ITaskDataSource from "./ITaskDataSource";
+import ITaskDataProvider from "./ITaskDataProvider";
 
-export default class TaskLocalDataSource implements ITaskDataSource {
+export default class TaskLocalDataProvider implements ITaskDataProvider {
   private db: Task[];
 
   constructor(private collection: string) {
