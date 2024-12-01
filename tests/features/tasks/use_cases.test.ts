@@ -4,8 +4,7 @@ import type { Task } from "@/features/tasks/domain/entities";
 import { TaskStatus } from "@/features/tasks/domain/subtypes";
 import { TaskModel } from "@/features/tasks/data/models";
 
-import { TaskStore } from "@/features/tasks/data/stores";
-import { TaskLocalDataProvider } from "@/features/tasks/data/providers";
+import { TaskLocalDataSource } from "@/features/tasks/data/sources";
 
 import {
   AddTask,
@@ -15,13 +14,12 @@ import {
 } from "@/features/tasks/domain/use_cases";
 
 const TEST_TASK_TABLE = "test_tasks";
-const task_data_source = new TaskLocalDataProvider(TEST_TASK_TABLE);
-const task_store = new TaskStore(task_data_source);
+const task_source = new TaskLocalDataSource(TEST_TASK_TABLE);
 
-const addTask = new AddTask(task_store).execute;
-const getTasks = new GetTasks(task_store).execute;
-const updateTask = new UpdateTask(task_store).execute;
-const deleteTask = new DeleteTask(task_store).execute;
+const addTask = new AddTask(task_source).execute;
+const getTasks = new GetTasks(task_source).execute;
+const updateTask = new UpdateTask(task_source).execute;
+const deleteTask = new DeleteTask(task_source).execute;
 
 const time1 = new Date(2024, 3, 12).getTime();
 const time2 = new Date(2024, 3, 22).getTime();

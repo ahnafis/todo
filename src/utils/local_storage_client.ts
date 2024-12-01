@@ -1,6 +1,9 @@
 import type { Entity, UniqueId } from "@/types";
+import { DataSource } from "./interfaces";
 
-export default class LocalStorageClient<T extends Entity> {
+export default class LocalStorageClient<T extends Entity>
+  implements DataSource<T>
+{
   private db: T[];
 
   constructor(private collection: string) {
@@ -8,7 +11,7 @@ export default class LocalStorageClient<T extends Entity> {
     this.db = JSON.parse(raw_data) || [];
   }
 
-  public insert = async (data: T): Promise<void> => {
+  public add = async (data: T): Promise<void> => {
     if (await this.exists(data.id)) {
       // TODO: Throw and handle an error instead.
       return console.log("Cannot add same item agian.");
@@ -18,14 +21,14 @@ export default class LocalStorageClient<T extends Entity> {
     await this.save();
   };
 
-  public read = async (filters?: Partial<T>): Promise<T[]> => {
+  public get = async (filters?: Partial<T>): Promise<T[]> => {
     if (!filters) return this.db;
 
-    return this.db.filter((task) => {
+    return this.db.filter((data) => {
       let key: keyof Partial<T>;
 
       // Return if filters matches with any data in the database.
-      for (key in filters) return task[key] === filters[key];
+      for (key in filters) return data[key] === filters[key];
     });
   };
 
@@ -41,7 +44,7 @@ export default class LocalStorageClient<T extends Entity> {
   };
 
   public delete = async (id: UniqueId): Promise<void> => {
-    const matches = await this.read({ id } as Partial<T>);
+    const matches = await this.get({ id } as Partial<T>);
     const index = this.db.indexOf(matches[0]);
 
     this.db.splice(index, 1);
@@ -49,7 +52,7 @@ export default class LocalStorageClient<T extends Entity> {
   };
 
   private exists = async (id: UniqueId): Promise<boolean> => {
-    const matches = await this.read({ id } as Partial<T>);
+    const matches = await this.get({ id } as Partial<T>);
     return matches.length > 0;
   };
 
