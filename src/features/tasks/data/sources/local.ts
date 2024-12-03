@@ -33,6 +33,6 @@ export default class TaskLocalDataSource implements DataSource<Task> {
   };
 
   private save = async (): Promise<void> => {
-    localStorage.setItem(this.collection, JSON.stringify(this.db));
+    localStorage.setItem(this.collection, JSON.stringify(await this.db.read()));
   };
 }
