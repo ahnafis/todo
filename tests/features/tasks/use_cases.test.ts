@@ -1,17 +1,15 @@
 import { describe, expect, test } from "vitest";
 
-import type { Task } from "@/features/tasks/domain/entities";
 import { TaskStatus } from "@/features/tasks/domain/subtypes";
-import { TaskModel } from "@/features/tasks/data/models";
-
-import { TaskLocalDataSource } from "@/features/tasks/data/sources";
-
 import {
   AddTask,
   DeleteTask,
   GetTasks,
   UpdateTask,
 } from "@/features/tasks/domain/use_cases";
+
+import { createTask } from "@/features/tasks/data/models";
+import { TaskLocalDataSource } from "@/features/tasks/data/sources";
 
 const TEST_TASK_TABLE = "test_tasks";
 const task_source = new TaskLocalDataSource(TEST_TASK_TABLE);
@@ -24,19 +22,19 @@ const deleteTask = new DeleteTask(task_source).execute;
 const time1 = new Date(2024, 3, 12).getTime();
 const time2 = new Date(2024, 3, 22).getTime();
 
-const task1: Task = new TaskModel({
+const task1 = createTask({
   title: "Test the Task entity",
   description: "Nothing really here.",
   due_date: time1,
   categories: ["easy", "favorite"],
-}).data;
+});
 
-const task2: Task = new TaskModel({
+const task2 = createTask({
   title: "Test use cases",
   description: "Hi! Nothing's here",
   due_date: time2,
   categories: ["very easy"],
-}).data;
+});
 
 describe("Use case tests", () => {
   test("Should add task to the database", async () => {
@@ -69,7 +67,7 @@ describe("Use case tests", () => {
   });
 
   test("Should avoid updating non-existing data into the database", async () => {
-    await updateTask(new TaskModel({}).data);
+    await updateTask(createTask({}));
     expect(await getTasks()).toStrictEqual([task1, task2]);
   });
 
