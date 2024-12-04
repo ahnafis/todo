@@ -1,15 +1,15 @@
 import { describe, expect, test } from "vitest";
 
-import { TaskStatus } from "@/features/tasks/domain/subtypes";
+import { TaskStatus } from "@/features/task/domain/subtypes";
 import {
   AddTask,
   DeleteTask,
   GetTasks,
   UpdateTask,
-} from "@/features/tasks/domain/use_cases";
+} from "@/features/task/domain/use_cases";
 
-import { createTask } from "@/features/tasks/data/models";
-import { LocalTaskRepository } from "@/features/tasks/data/repositories";
+import { createTask } from "@/features/task/data/models";
+import { LocalTaskRepository } from "@/features/task/data/repositories";
 
 const TEST_TASK_TABLE = "test_tasks";
 const repository = new LocalTaskRepository(TEST_TASK_TABLE);
