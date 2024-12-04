@@ -1,9 +1,9 @@
 import type { UniqueId } from "@/types";
 import { InMemoryDB } from "@/utils";
-import { DataSource } from "@/utils/interfaces";
+import { Repository } from "@/utils/interfaces";
 import type { Task } from "../../domain/entities";
 
-export default class TaskLocalDataSource implements DataSource<Task> {
+export default class LocalTaskRepository implements Repository<Task> {
   private db: InMemoryDB<Task>;
 
   constructor(private collection: string) {

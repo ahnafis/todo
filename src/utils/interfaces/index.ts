@@ -1,4 +1,4 @@
 import type Command from "./Command";
-import DataSource from "./DataSource";
+import Repository from "./Repository";
 
-export { Command, type DataSource };
+export { Command, type Repository };

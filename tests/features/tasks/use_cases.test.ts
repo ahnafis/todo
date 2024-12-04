@@ -9,15 +9,15 @@ import {
 } from "@/features/tasks/domain/use_cases";
 
 import { createTask } from "@/features/tasks/data/models";
-import { TaskLocalDataSource } from "@/features/tasks/data/sources";
+import { LocalTaskRepository } from "@/features/tasks/data/repositories";
 
 const TEST_TASK_TABLE = "test_tasks";
-const task_source = new TaskLocalDataSource(TEST_TASK_TABLE);
+const repository = new LocalTaskRepository(TEST_TASK_TABLE);
 
-const addTask = new AddTask(task_source).execute;
-const getTasks = new GetTasks(task_source).execute;
-const updateTask = new UpdateTask(task_source).execute;
-const deleteTask = new DeleteTask(task_source).execute;
+const addTask = new AddTask(repository).execute;
+const getTasks = new GetTasks(repository).execute;
+const updateTask = new UpdateTask(repository).execute;
+const deleteTask = new DeleteTask(repository).execute;
 
 const time1 = new Date(2024, 3, 12).getTime();
 const time2 = new Date(2024, 3, 22).getTime();
