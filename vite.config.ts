@@ -1,11 +1,14 @@
-/// <reference types="vitest" />
+import * as vite from "vite";
+import * as vitest from "vitest/config";
 
-import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
-export default defineConfig({
+const vite_config = vite.defineConfig({
   plugins: [tsconfigPaths()],
-  test: {
-    environment: "jsdom",
-  },
 });
+
+const vitest_config = vitest.defineConfig({
+  test: { environment: "jsdom" },
+});
+
+export default vite.mergeConfig(vite_config, vitest_config);
