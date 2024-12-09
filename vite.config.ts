@@ -2,9 +2,11 @@ import * as vite from "vite";
 import * as vitest from "vitest/config";
 
 import tsconfigPaths from "vite-tsconfig-paths";
+import react from "@vitejs/plugin-react-swc";
 
 const vite_config = vite.defineConfig({
-  plugins: [tsconfigPaths()],
+  server: { port: 1111 },
+  plugins: [tsconfigPaths(), react()],
 });
 
 const vitest_config = vitest.defineConfig({
