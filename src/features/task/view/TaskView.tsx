@@ -18,7 +18,7 @@ export default function TaskView() {
   return (
     <div>
       <div>
-        <TaskList data={tasks} />
+        <TaskList data={tasks} setTasks={setTasks} />
       </div>
       <div>
         <AddTaskButton setTasks={setTasks} />
