@@ -5,7 +5,8 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import react from "@vitejs/plugin-react-swc";
 
 const vite_config = vite.defineConfig({
-  server: { port: 1111 },
+  server: { port: 1100 },
+  preview: { port: 1101 },
   plugins: [tsconfigPaths(), react()],
 });
 
