@@ -1,12 +1,6 @@
 import { describe, expect, test } from "vitest";
 
 import { TaskStatus } from "@/features/task/domain/subtypes";
-import {
-  AddTask,
-  DeleteTask,
-  GetTasks,
-  UpdateTask,
-} from "@/features/task/domain/use_cases";
 
 import { createTask } from "@/features/task/data/models";
 import { LocalTaskRepository } from "@/features/task/data/repositories";
@@ -14,10 +8,10 @@ import { LocalTaskRepository } from "@/features/task/data/repositories";
 const TEST_TASK_TABLE = "test_tasks";
 const repository = new LocalTaskRepository(TEST_TASK_TABLE);
 
-const addTask = new AddTask(repository).execute;
-const getTasks = new GetTasks(repository).execute;
-const updateTask = new UpdateTask(repository).execute;
-const deleteTask = new DeleteTask(repository).execute;
+const addTask = repository.add;
+const getTasks = repository.get;
+const updateTask = repository.update;
+const deleteTask = repository.delete;
 
 const time1 = new Date(2024, 3, 12).getTime();
 const time2 = new Date(2024, 3, 22).getTime();
