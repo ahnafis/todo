@@ -8,10 +8,12 @@ type TaskListProps = {
 
 export default function TaskList({ data, setTasks }: TaskListProps) {
   return (
-    <ul>
-      {data.map(task => (
-        <TaskListItem key={task.id} data={task} setTasks={setTasks} />
-      ))}
-    </ul>
+    <div className="task-list">
+      <ul>
+        {data.map(task => (
+          <TaskListItem key={task.id} data={task} setTasks={setTasks} />
+        ))}
+      </ul>
+    </div>
   );
 }

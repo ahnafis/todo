@@ -1,8 +1,13 @@
 import React from "react";
 
+import { faAdd } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { addTask, getTasks } from "../controller";
 import { createTask } from "../data/models";
 import type { Task } from "../domain/entities";
-import { addTask, getTasks } from "../controller";
+
+import "./AddTaskButton.css";
 
 type AddTaskButtonProps = {
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
@@ -11,9 +16,12 @@ type AddTaskButtonProps = {
 export default function AddTaskButton({ setTasks }: AddTaskButtonProps) {
   function handleClick() {
     // TODO: create a modal or drawer for input.
-    const title = prompt("Enter a title for the task") || "";
+    const title = prompt("Enter a title for the task");
+    if (title === null) {
+      return;
+    }
 
-    const task = createTask({ title });
+    const task = createTask({ title: title || "" });
     setTasks(savedTasks => [...savedTasks, task]);
 
     // TODO: Refactor this part.
@@ -23,5 +31,9 @@ export default function AddTaskButton({ setTasks }: AddTaskButtonProps) {
     });
   }
 
-  return <button onClick={handleClick}>Add</button>;
+  return (
+    <button className="add-button" onClick={handleClick}>
+      <FontAwesomeIcon icon={faAdd} />
+    </button>
+  );
 }

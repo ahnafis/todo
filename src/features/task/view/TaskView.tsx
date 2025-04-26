@@ -6,6 +6,8 @@ import { getTasks } from "../controller";
 import TaskList from "./TaskList";
 import AddTaskButton from "./AddTaskButton";
 
+import "./TaskView.css";
+
 export default function TaskView() {
   const [tasks, setTasks] = React.useState<Task[]>([]);
 
@@ -16,13 +18,9 @@ export default function TaskView() {
   }, []);
 
   return (
-    <div>
-      <div>
-        <TaskList data={tasks} setTasks={setTasks} />
-      </div>
-      <div>
-        <AddTaskButton setTasks={setTasks} />
-      </div>
+    <div className="task-view">
+      <TaskList data={tasks} setTasks={setTasks} />
+      <AddTaskButton setTasks={setTasks} />
     </div>
   );
 }

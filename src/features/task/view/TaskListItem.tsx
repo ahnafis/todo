@@ -11,9 +11,9 @@ export default function TaskListItem({
   setTasks,
 }: TaskListItemProps) {
   return (
-    <li>
-      <span>{task.title}</span>
-      <span>
+    <li className="task-list-item">
+      <span className="task-title">{task.title}</span>
+      <span className="task-delete-container">
         <DeleteTaskButton selected_tasks={[task.id]} setTasks={setTasks} />
       </span>
     </li>

@@ -1,9 +1,14 @@
 import React from "react";
 
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import type { Task } from "../domain/entities";
 import type { UniqueId } from "@/types";
 
 import { deleteTask, getTasks } from "../controller";
+
+import "./DeleteTaskButton.css";
 
 type DeleteTaskButtonProps = {
   selected_tasks: UniqueId[];
@@ -27,5 +32,9 @@ export default function DeleteTaskButton({
     });
   }
 
-  return <button onClick={handleClick}>Delete</button>;
+  return (
+    <button className="delete-button" onClick={handleClick}>
+      <FontAwesomeIcon icon={faTrash} />
+    </button>
+  );
 }
